@@ -1,11 +1,13 @@
 package com.example.foodorderapp.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class FoodModel implements Serializable {
     private String _id;
     private String name;
     private String description;
+    private List images;
     private double price;
     private int numberInCart;
 
@@ -54,5 +56,13 @@ public class FoodModel implements Serializable {
 
     public void setNumberInCart(int numberInCart) {
         this.numberInCart = numberInCart;
+    }
+
+    public List getImages() {
+        return images;
+    }
+
+    public void setImages(List images) {
+        this.images = images;
     }
 }

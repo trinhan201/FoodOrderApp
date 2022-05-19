@@ -7,12 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodorderapp.R;
 import com.example.foodorderapp.activities.FoodDetailActivity;
 import com.example.foodorderapp.models.FoodModel;
@@ -48,6 +51,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
             holder.tvName.setText(foodModel.getName());
         }
         holder.tvPrice.setText(String.valueOf(foodModel.getPrice()));
+
+        String img = String.valueOf(foodModel.getImages());
+        img = img.substring(1,img.length() - 1);
+        Glide.with(holder.itemView.getContext()).load(img).into(holder.imgFood);
+
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,12 +79,14 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
     public class ViewHolder extends RecyclerView.ViewHolder{
         CardView layout_item;
         TextView tvName, tvPrice;
+        ImageView imgFood;
         Button btnAdd;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.name);
             tvPrice = itemView.findViewById((R.id.price));
             btnAdd = itemView.findViewById(R.id.btnAddToCart);
+            imgFood = itemView.findViewById(R.id.imgFood);
             layout_item = itemView.findViewById(R.id.layout_item);
 
         }

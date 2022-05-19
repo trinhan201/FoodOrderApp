@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodorderapp.R;
 import com.example.foodorderapp.helpers.ManagementCart;
 import com.example.foodorderapp.models.FoodModel;
@@ -16,7 +17,7 @@ import com.example.foodorderapp.models.FoodModel;
 public class FoodDetailActivity extends AppCompatActivity {
     private TextView addToCartBtn;
     private TextView titleTxt, descriptionTxt, numberOrderTxt,priceTxt;
-    private ImageView plusBtn, minusBtn;
+    private ImageView plusBtn, minusBtn, imgFood;
     private FoodModel object;
     int numberOrder = 1;
     private ManagementCart managementCart;
@@ -36,6 +37,10 @@ public class FoodDetailActivity extends AppCompatActivity {
 
     private void getBundle() {
         object = (FoodModel) getIntent().getSerializableExtra("object");
+
+        String img = String.valueOf(object.getImages());
+        img = img.substring(1,img.length() - 1);
+        Glide.with(this).load(img).into(imgFood);
 
         titleTxt.setText(object.getName());
         descriptionTxt.setText(object.getDescription());
@@ -70,6 +75,7 @@ public class FoodDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        imgFood = findViewById(R.id.imgFood);
         addToCartBtn = findViewById(R.id.addToCartBtn);
         titleTxt = findViewById(R.id.tvName);
         descriptionTxt = findViewById(R.id.tvDesc);

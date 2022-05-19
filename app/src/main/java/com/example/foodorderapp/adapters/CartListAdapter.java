@@ -7,16 +7,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.foodorderapp.R;
 import com.example.foodorderapp.helpers.ManagementCart;
 import com.example.foodorderapp.interfaces.ChangeNumberItemsListener;
 import com.example.foodorderapp.models.FoodModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder>{
     private ArrayList<FoodModel> foodModels;
@@ -39,13 +42,12 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull CartListAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-//        if(foodModels.get(position).getName().length() > 10){
-//            holder.title.setText(foodModels.get(position).getName().substring(0,9).concat("..."));
-//        }else {
-//            holder.title.setText(foodModels.get(position).getName());
-//        }
+        String img = String.valueOf(foodModels.get(position).getImages());
+        img = img.substring(1,img.length() - 1);
+        Glide.with(holder.itemView.getContext()).load(img).into(holder.pic);
         holder.title.setText(foodModels.get(position).getName());
         holder.feeEachItem.setText(String.valueOf(foodModels.get(position).getPrice()));
+
         holder.totalEachItem.setText(String.valueOf(Math.round((foodModels.get(position).getNumberInCart() * foodModels.get(position).getPrice()) * 100) / 100));
         holder.num.setText(String.valueOf(foodModels.get(position).getNumberInCart()));
 
@@ -94,6 +96,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
             num = itemView.findViewById(R.id.numberItemTxt);
             plusItem = itemView.findViewById(R.id.plusCardBtn);
             minusItem = itemView.findViewById(R.id.minusCartBtn);
+            pic = itemView.findViewById(R.id.picCart);
         }
     }
 }

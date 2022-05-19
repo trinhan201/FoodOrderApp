@@ -39,6 +39,7 @@
         android:text="Price"/>
 
     <ImageView
+        android:id="@+id/imgFood"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"
