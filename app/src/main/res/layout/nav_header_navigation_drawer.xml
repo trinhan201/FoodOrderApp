@@ -10,7 +10,7 @@
     android:paddingTop="5dp"
     android:paddingRight="5dp"
     android:paddingLeft="5dp"
-    android:backgroundTint="#F4511E"
+    android:backgroundTint="@color/teal_200"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
@@ -18,18 +18,18 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginTop="40dp"
-        android:background="@drawable/ic_launcher_background"/>
+        android:background="@drawable/img_bg"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
-        android:text="Android Studio"
+        android:text="Trinh Phieu An"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com"/>
+        android:text="51800341@student.tdtu.edu.vn"/>
 </LinearLayout>

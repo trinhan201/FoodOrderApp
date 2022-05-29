@@ -21,10 +21,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
-            app:title="Food for you"
             android:minHeight="?attr/actionBarSize"
+            app:title="Food For You"
+            app:titleTextColor="@color/teal_200"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:background="#ff5e00">
+            android:background="@color/teal_200">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_baseline_search_24"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/ic_baseline_sort_24"/>
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout

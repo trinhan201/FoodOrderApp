@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ import com.example.foodorderapp.activities.FoodDetailActivity;
 import com.example.foodorderapp.models.FoodModel;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
     private List<FoodModel> lstFood;
@@ -50,7 +53,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
         }else {
             holder.tvName.setText(foodModel.getName());
         }
-        holder.tvPrice.setText(String.valueOf(foodModel.getPrice()));
+        holder.tvPrice.setText(String.valueOf(foodModel.getPrice() + " VND"));
 
         String img = String.valueOf(foodModel.getImages());
         img = img.substring(1,img.length() - 1);
@@ -77,18 +80,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder>{
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        CardView layout_item;
         TextView tvName, tvPrice;
-        ImageView imgFood;
-        Button btnAdd;
+        CircleImageView imgFood;
+        ImageButton btnAdd;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.name);
             tvPrice = itemView.findViewById((R.id.price));
             btnAdd = itemView.findViewById(R.id.btnAddToCart);
             imgFood = itemView.findViewById(R.id.imgFood);
-            layout_item = itemView.findViewById(R.id.layout_item);
-
         }
     }
 }

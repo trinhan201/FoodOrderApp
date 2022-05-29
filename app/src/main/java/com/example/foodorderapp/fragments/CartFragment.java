@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -24,6 +25,7 @@ public class CartFragment extends Fragment {
     private RecyclerView recyclerViewList;
     private ManagementCart managementCart;
     TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt, emptyTxt;
+    Button btnCheckOut;
     private double tax;
     private ScrollView scrollView;
 
@@ -44,6 +46,7 @@ public class CartFragment extends Fragment {
         deliveryTxt = view.findViewById(R.id.deliveryTxt);
         totalTxt = view.findViewById(R.id.totalTxt);
         emptyTxt = view.findViewById(R.id.emptyTxt);
+        btnCheckOut = view.findViewById(R.id.btnCheckOut);
         scrollView = view.findViewById(R.id.scrollView3);
         recyclerViewList=view.findViewById(R.id.cartView);
         initList();

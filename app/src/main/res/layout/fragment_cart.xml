@@ -157,8 +157,8 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/textView16"
+                <Button
+                    android:id="@+id/btnCheckOut"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_margin="16dp"

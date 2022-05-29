@@ -6,19 +6,23 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.foodorderapp.R;
+import com.example.foodorderapp.fragments.CartFragment;
 import com.example.foodorderapp.helpers.ManagementCart;
 import com.example.foodorderapp.models.FoodModel;
 
 public class FoodDetailActivity extends AppCompatActivity {
-    private TextView addToCartBtn;
+    private Button addToCartBtn;
     private TextView titleTxt, descriptionTxt, numberOrderTxt,priceTxt;
     private ImageView plusBtn, minusBtn, imgFood;
     private FoodModel object;
+    private ImageButton btnBack;
     int numberOrder = 1;
     private ManagementCart managementCart;
 
@@ -32,7 +36,6 @@ public class FoodDetailActivity extends AppCompatActivity {
         managementCart = new ManagementCart(this);
         initView();
         getBundle();
-
     }
 
     private void getBundle() {
@@ -44,7 +47,7 @@ public class FoodDetailActivity extends AppCompatActivity {
 
         titleTxt.setText(object.getName());
         descriptionTxt.setText(object.getDescription());
-        priceTxt.setText(String.valueOf(object.getPrice()));
+        priceTxt.setText(String.valueOf(object.getPrice() + " VND"));
         numberOrderTxt.setText(String.valueOf(numberOrder));
 
         plusBtn.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +75,13 @@ public class FoodDetailActivity extends AppCompatActivity {
                 managementCart.insertFood(object);
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     private void initView() {
@@ -83,5 +93,7 @@ public class FoodDetailActivity extends AppCompatActivity {
         plusBtn = findViewById(R.id.plusBtn);
         minusBtn = findViewById(R.id.minusBtn);
         priceTxt = findViewById(R.id.tvPrice);
+        btnBack = findViewById(R.id.btnBack);
     }
+
 }
