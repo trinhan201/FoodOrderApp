@@ -18,6 +18,7 @@ import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.example.foodorderapp.R;
 import com.example.foodorderapp.fragments.CartFragment;
 import com.example.foodorderapp.fragments.HomeFragment;
+import com.example.foodorderapp.fragments.LoginFragment;
 import com.example.foodorderapp.fragments.NotificationFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -70,15 +71,19 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.navigation_home:
                 fragment = new HomeFragment();
-                item.setChecked(true);
+//                item.setChecked(true);
+                break;
+            case R.id.navigation_login:
+                fragment = new LoginFragment();
+//                item.setChecked(true);
                 break;
             case R.id.navigation_dashboard:
                 fragment = new CartFragment();
-                item.setChecked(true);
+//                item.setChecked(true);
                 break;
             case R.id.navigation_notifications:
                 fragment = new NotificationFragment();
-                item.setChecked(true);
+//                item.setChecked(true);
                 break;
         }
 

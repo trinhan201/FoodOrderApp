@@ -24,4 +24,6 @@ public interface ApiService {
 
     @GET("api/v1/products")
     Call<List<FoodModel>> callListFood();
+
+    @POST("api/v1/user/login")
 }

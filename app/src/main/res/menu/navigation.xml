@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="Home"
-        android:checked="true"/>
+        android:id="@+id/navigation_login"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:title="Login"/>
+
+    <item
+    android:id="@+id/navigation_home"
+    android:icon="@drawable/ic_baseline_home_24"
+    android:title="Home"/>
 
     <item
         android:id="@+id/navigation_dashboard"

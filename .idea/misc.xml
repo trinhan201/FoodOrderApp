@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Code/AndroidStudioProjects/FoodOrderApp/app/src/main/res/layout/activity_main.xml" value="0.17831813576494426" />
+        <entry key="..\:/Code/AndroidStudioProjects/FoodOrderApp/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
+        <entry key="..\:/Code/AndroidStudioProjects/FoodOrderApp/app/src/main/res/layout/fragment_home.xml" value="0.17831813576494426" />
+        <entry key="..\:/Code/AndroidStudioProjects/FoodOrderApp/app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="..\:/Code/AndroidStudioProjects/FoodOrderApp/app/src/main/res/menu/navigation.xml" value="0.33" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/FoodOrderApp/app/src/main/res/drawable/btn_bg.xml" value="0.15092592592592594" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/FoodOrderApp/app/src/main/res/drawable/toolbar_bg.xml" value="0.15092592592592594" />
         <entry key="..\:/Users/Dell/AndroidStudioProjects/FoodOrderApp/app/src/main/res/layout/activity_cart_list.xml" value="0.1" />
