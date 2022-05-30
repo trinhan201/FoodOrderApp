@@ -75,15 +75,15 @@ public class CartFragment extends Fragment {
 
     private void CalculateCart() {
         double percentTax = 0.02;
-        double delivery = 10;
+        double delivery = 10000;
 
         tax = Math.round((managementCart.getTotalFee() * percentTax) * 100) / 100;
         double total = Math.round((managementCart.getTotalFee() + tax + delivery) * 100) / 100;
         double itemTotal = Math.round(managementCart.getTotalFee() * 100) / 100;
 
-        totalFeeTxt.setText("$" + itemTotal);
-        taxTxt.setText("$" + tax);
-        deliveryTxt.setText("$" + delivery);
-        totalTxt.setText("$" + total);
+        totalFeeTxt.setText(itemTotal + "VND");
+        taxTxt.setText(tax + "VND");
+        deliveryTxt.setText(delivery + "VND");
+        totalTxt.setText(total + "VND");
     }
 }
