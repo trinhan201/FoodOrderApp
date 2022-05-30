@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -24,7 +25,8 @@ public class CartFragment extends Fragment {
     private RecyclerView recyclerViewList;
     private ManagementCart managementCart;
     TextView totalFeeTxt, taxTxt, deliveryTxt, totalTxt, emptyTxt;
-    private double tax;
+    Button btnCheckOut;
+//    private double tax;
     private ScrollView scrollView;
 
     @Override
@@ -39,11 +41,12 @@ public class CartFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         managementCart = new ManagementCart(getActivity());
 
-        totalFeeTxt = view.findViewById(R.id.totalFeeTxt);
-        taxTxt = view.findViewById(R.id.taxTxt);
-        deliveryTxt = view.findViewById(R.id.deliveryTxt);
+//        totalFeeTxt = view.findViewById(R.id.totalFeeTxt);
+//        taxTxt = view.findViewById(R.id.taxTxt);
+//        deliveryTxt = view.findViewById(R.id.deliveryTxt);
         totalTxt = view.findViewById(R.id.totalTxt);
         emptyTxt = view.findViewById(R.id.emptyTxt);
+        btnCheckOut = view.findViewById(R.id.btnCheckOut);
         scrollView = view.findViewById(R.id.scrollView3);
         recyclerViewList=view.findViewById(R.id.cartView);
         initList();
@@ -71,16 +74,16 @@ public class CartFragment extends Fragment {
     }
 
     private void CalculateCart() {
-        double percentTax = 0.02;
-        double delivery = 10;
+//        double percentTax = 0.02;
+//        double delivery = 10000;
 
-        tax = Math.round((managementCart.getTotalFee() * percentTax) * 100) / 100;
-        double total = Math.round((managementCart.getTotalFee() + tax + delivery) * 100) / 100;
+//        tax = Math.round((managementCart.getTotalFee() * percentTax) * 100) / 100;
+        double total = Math.round((managementCart.getTotalFee()) * 100) / 100;
         double itemTotal = Math.round(managementCart.getTotalFee() * 100) / 100;
 
-        totalFeeTxt.setText("$" + itemTotal);
-        taxTxt.setText("$" + tax);
-        deliveryTxt.setText("$" + delivery);
-        totalTxt.setText("$" + total);
+//        totalFeeTxt.setText(itemTotal + "VND");
+//        taxTxt.setText(tax + "VND");
+//        deliveryTxt.setText(delivery + "VND");
+        totalTxt.setText(total + "VND");
     }
 }

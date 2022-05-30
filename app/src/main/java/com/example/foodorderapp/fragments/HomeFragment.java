@@ -42,7 +42,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvFood = view.findViewById(R.id.rvFood);
-        rvFood.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        rvFood.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ApiService.apiService.callListFood().enqueue(new Callback<List<FoodModel>>() {
             @Override
