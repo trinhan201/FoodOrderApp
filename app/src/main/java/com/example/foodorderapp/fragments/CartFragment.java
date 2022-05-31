@@ -1,24 +1,42 @@
 package com.example.foodorderapp.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodorderapp.R;
 import com.example.foodorderapp.adapters.CartListAdapter;
+import com.example.foodorderapp.helpers.GlobalUser;
 import com.example.foodorderapp.helpers.ManagementCart;
+import com.example.foodorderapp.interfaces.ApiService;
 import com.example.foodorderapp.interfaces.ChangeNumberItemsListener;
+import com.example.foodorderapp.models.FoodModel;
+import com.example.foodorderapp.models.Order;
+import com.example.foodorderapp.models.OrderItem;
+import com.example.foodorderapp.models.OrderResponse;
+import com.example.foodorderapp.models.User;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartFragment extends Fragment {
     private RecyclerView.Adapter adapter;
@@ -38,6 +56,7 @@ public class CartFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         super.onViewCreated(view, savedInstanceState);
         managementCart = new ManagementCart(getActivity());
 
@@ -54,6 +73,43 @@ public class CartFragment extends Fragment {
     }
 
     private void initList() {
+
+        btnCheckOut.setOnClickListener(v ->{
+            GlobalUser user = GlobalUser.getGlobalUser();
+
+            if (user.getToken() == null){
+                Toast.makeText(this.getActivity(), "Bạn chưa đăng nhập", Toast.LENGTH_LONG).show();
+            }
+            else{
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                    // TODO Chỗ này có thê dùng adapter pattern
+
+                    ArrayList<FoodModel> cartItems = managementCart.getListCart();
+                    ArrayList<OrderItem> orderItems = new ArrayList<>();
+                    cartItems.forEach(item->{
+                        orderItems.add(new OrderItem(item.get_id(), item.getNumberInCart()));
+                    });
+
+                    Order order = new Order();
+                    order.setOrderItems(orderItems);
+
+                    ApiService.apiService.order(user.getToken(), order).enqueue(new Callback<OrderResponse>(){
+
+                        @Override
+                        public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+                            Toast.makeText(getActivity(), "Order success", Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<OrderResponse> call, Throwable t) {
+                            Toast.makeText(getActivity(), "Login fail", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
         adapter = new CartListAdapter(managementCart.getListCart(), getActivity(), new ChangeNumberItemsListener() {

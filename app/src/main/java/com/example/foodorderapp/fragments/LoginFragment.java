@@ -2,13 +2,30 @@ package com.example.foodorderapp.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodorderapp.R;
+import com.example.foodorderapp.helpers.GlobalUser;
+import com.example.foodorderapp.interfaces.ApiService;
+
+import com.example.foodorderapp.models.Login;
+import com.example.foodorderapp.models.User;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +38,8 @@ public class LoginFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Button btnLogin, btnRegister;
+    private EditText etEmail, etPassword;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,5 +81,51 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_login, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        btnLogin = view.findViewById(R.id.btnLogin);
+        btnRegister = view.findViewById(R.id.btnRegisterPage);
+        etEmail = view.findViewById(R.id.email);
+        etPassword = view.findViewById(R.id.password);
+        btnLogin.setOnClickListener(v ->{
+            String email = etEmail.getText().toString();
+            String password = etPassword.getText().toString();
+            Login loginData = new Login(email, password);
+            ApiService.apiService.login(loginData).enqueue(new Callback<User>(){
+
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    Log.d("log", response.body().toString());
+                    GlobalUser user = GlobalUser.getGlobalUser();
+                    user.setGlobalUser(response.body());
+                    Log.d("log", "name: "+user.getName());
+                    Log.d("log", "email: "+user.getEmail());
+
+                    TextView displayName = (TextView)view.getRootView().findViewById(R.id.displayName);
+                    TextView displayEmail = (TextView)view.getRootView().findViewById(R.id.displayEmail);
+                    displayName.setText(user.getName());
+                    displayEmail.setText(user.getEmail());
+
+                    Fragment homeFragment = new HomeFragment();
+                    FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.flContent, homeFragment);
+                    fragmentTransaction.commit();
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Login fail", Toast.LENGTH_LONG).show();
+                }
+            });
+        });
+        btnRegister.setOnClickListener(v ->{
+            Fragment registerFragment = new RegisterFragment();
+            FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.flContent, registerFragment);
+            fragmentTransaction.commit();
+        });
     }
 }

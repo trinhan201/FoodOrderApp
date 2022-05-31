@@ -14,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -22,11 +23,15 @@ import com.example.foodorderapp.fragments.CartFragment;
 import com.example.foodorderapp.fragments.HomeFragment;
 import com.example.foodorderapp.fragments.LoginFragment;
 import com.example.foodorderapp.fragments.NotificationFragment;
+import com.example.foodorderapp.helpers.GlobalUser;
+import com.example.foodorderapp.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+
+    public GlobalUser globalUser = GlobalUser.getGlobalUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+        if (globalUser.getToken() != null){
+            TextView displayName = findViewById(R.id.displayName);
+            TextView displayEmail = findViewById(R.id.displayEmail);
+            displayName.setText(globalUser.getName());
+            displayEmail.setText(globalUser.getEmail());
+        }
     }
 
     @Override
