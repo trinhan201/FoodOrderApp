@@ -87,7 +87,6 @@ public class CartFragment extends Fragment implements CustomerEmailObserver {
         mailService.registerObserver(this);
         btnCheckOut.setOnClickListener(v ->{
             GlobalUser user = GlobalUser.getGlobalUser();
-            mailService.Notify();
             if (user.getToken() == null){
                 Toast.makeText(this.getActivity(), "Bạn chưa đăng nhập", Toast.LENGTH_LONG).show();
             }
@@ -110,12 +109,13 @@ public class CartFragment extends Fragment implements CustomerEmailObserver {
 
                         @Override
                         public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
+                            mailService.Notify();
                             Toast.makeText(getActivity(), "Order success", Toast.LENGTH_LONG).show();
                         }
 
                         @Override
                         public void onFailure(Call<OrderResponse> call, Throwable t) {
-                            Toast.makeText(getActivity(), "Login fail", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Order fail", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

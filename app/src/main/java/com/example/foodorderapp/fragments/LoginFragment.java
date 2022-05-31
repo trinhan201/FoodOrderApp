@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodorderapp.R;
+import com.example.foodorderapp.activities.MainActivity;
 import com.example.foodorderapp.helpers.GlobalUser;
+import com.example.foodorderapp.helpers.MainFacade;
 import com.example.foodorderapp.interfaces.ApiService;
 
 import com.example.foodorderapp.models.Login;
@@ -110,10 +112,8 @@ public class LoginFragment extends Fragment {
                     Log.d("log", "name: "+user.getName());
                     Log.d("log", "email: "+user.getEmail());
 
-                    TextView displayName = (TextView)view.getRootView().findViewById(R.id.displayName);
-                    TextView displayEmail = (TextView)view.getRootView().findViewById(R.id.displayEmail);
-                    displayName.setText(user.getName());
-                    displayEmail.setText(user.getEmail());
+                    MainFacade facade = new MainFacade(getActivity().getCurrentFocus());
+                    facade.updateUserInfo(user.getName(), user.getEmail());
 
                     SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
                     SharedPreferences.Editor editor = settings.edit();
@@ -124,7 +124,7 @@ public class LoginFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.flContent, homeFragment);
                     fragmentTransaction.commit();
-                    hideLogin();
+                    facade.showLogout();
                 }
 
                 @Override
@@ -139,12 +139,5 @@ public class LoginFragment extends Fragment {
             fragmentTransaction.replace(R.id.flContent, registerFragment);
             fragmentTransaction.commit();
         });
-    }
-
-    private void hideLogin() {
-        navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-        Menu nav_Menu = navigationView.getMenu();
-        nav_Menu.findItem(R.id.navigation_login).setVisible(false);
-        nav_Menu.findItem(R.id.navigation_logout).setVisible(true);
     }
 }
