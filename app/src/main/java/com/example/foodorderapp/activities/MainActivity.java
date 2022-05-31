@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
+    NavigationView navigationView;
 
     public GlobalUser globalUser = GlobalUser.getGlobalUser();
 
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
             displayName.setText(globalUser.getName());
             displayEmail.setText(globalUser.getEmail());
         }
+        hideLogout();
     }
 
     @Override
@@ -107,5 +110,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    private void hideLogout() {
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.navigation_login).setVisible(true);
+        nav_Menu.findItem(R.id.navigation_logout).setVisible(false);
+    }
 }

@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.example.foodorderapp.interfaces.ApiService;
 
 import com.example.foodorderapp.models.Login;
 import com.example.foodorderapp.models.User;
+import com.google.android.material.navigation.NavigationView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,6 +37,7 @@ import retrofit2.Response;
  * create an instance of this fragment.
  */
 public class LoginFragment extends Fragment {
+    NavigationView navigationView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,6 +53,7 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -120,6 +124,7 @@ public class LoginFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.flContent, homeFragment);
                     fragmentTransaction.commit();
+                    hideLogin();
                 }
 
                 @Override
@@ -134,5 +139,12 @@ public class LoginFragment extends Fragment {
             fragmentTransaction.replace(R.id.flContent, registerFragment);
             fragmentTransaction.commit();
         });
+    }
+
+    private void hideLogin() {
+        navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.navigation_login).setVisible(false);
+        nav_Menu.findItem(R.id.navigation_logout).setVisible(true);
     }
 }
