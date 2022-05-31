@@ -1,5 +1,7 @@
 package com.example.foodorderapp.fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -108,6 +110,11 @@ public class LoginFragment extends Fragment {
                     TextView displayEmail = (TextView)view.getRootView().findViewById(R.id.displayEmail);
                     displayName.setText(user.getName());
                     displayEmail.setText(user.getEmail());
+
+                    SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("email", user.getEmail());
+                    editor.apply();
 
                     Fragment homeFragment = new HomeFragment();
                     FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();

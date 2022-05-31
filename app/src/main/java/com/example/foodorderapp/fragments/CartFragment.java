@@ -1,17 +1,9 @@
 package com.example.foodorderapp.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +11,12 @@ import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodorderapp.R;
 import com.example.foodorderapp.adapters.CartListAdapter;
@@ -30,15 +28,27 @@ import com.example.foodorderapp.models.FoodModel;
 import com.example.foodorderapp.models.Order;
 import com.example.foodorderapp.models.OrderItem;
 import com.example.foodorderapp.models.OrderResponse;
-import com.example.foodorderapp.models.User;
+import com.example.foodorderapp.observer.CustomerEmailObserver;
+import com.example.foodorderapp.observer.EmailData;
+import com.example.foodorderapp.observer.MailService;
 
 import java.util.ArrayList;
+import java.util.Properties;
+
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements CustomerEmailObserver {
     private RecyclerView.Adapter adapter;
     private RecyclerView recyclerViewList;
     private ManagementCart managementCart;
@@ -73,14 +83,16 @@ public class CartFragment extends Fragment {
     }
 
     private void initList() {
-
+        MailService mailService = new MailService();
+        mailService.registerObserver(this);
         btnCheckOut.setOnClickListener(v ->{
             GlobalUser user = GlobalUser.getGlobalUser();
-
+            mailService.Notify();
             if (user.getToken() == null){
                 Toast.makeText(this.getActivity(), "Bạn chưa đăng nhập", Toast.LENGTH_LONG).show();
             }
             else{
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
 
                     // TODO Chỗ này có thê dùng adapter pattern
@@ -109,6 +121,8 @@ public class CartFragment extends Fragment {
                 }
             }
         });
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
@@ -141,5 +155,42 @@ public class CartFragment extends Fragment {
 //        taxTxt.setText(tax + "VND");
 //        deliveryTxt.setText(delivery + "VND");
         totalTxt.setText(total + "VND");
+    }
+
+    @Override
+    public void sendEmail() {
+        final String username = "doccocaubai012@gmail.com"; // username email nguoi gui
+        final String password = "sucmanhhamaarm"; // password email nguoi gui
+
+        EmailData emailData = new EmailData();
+        SharedPreferences settings = this.getActivity().getSharedPreferences("PREFS",0);
+        String email = settings.getString("email","");
+        emailData.setAddress(email);
+        emailData.setSubject("Thông báo xác nhận đơn hàng");
+        emailData.setMessage("Cám ơn quý khách đã đặt mua thức ăn");
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        Session session = Session.getInstance(props, new Authenticator() {
+                    @Override
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                }
+        );
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            InternetAddress toAddress = InternetAddress.parse(emailData.getAddress())[0];
+            message.setRecipient(Message.RecipientType.TO, toAddress);
+            message.setSubject(emailData.getSubject());
+            message.setText(emailData.getMessage());
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
