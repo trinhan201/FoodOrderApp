@@ -23,10 +23,10 @@ public class MainFacade {
 
     public void showLogin(){
         LoginMenuToggle toggle = new LoginMenuToggle(view);
-        toggle.hideLogout();
+        toggle.showLogin();
     }
     public void showLogout(){
         LoginMenuToggle toggle = new LoginMenuToggle(view);
-        toggle.showLogout();
+        toggle.hideLogin();
     }
 }

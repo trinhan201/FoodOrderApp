@@ -58,6 +58,10 @@ public class ManagementCart {
         changeNumberItemsListener.changed();
     }
 
+    public void resetCart(){
+        tinyDB.clear();
+    }
+
     public Double getTotalFee() {
         ArrayList<FoodModel> listfood = getListCart();
         double fee = 0;

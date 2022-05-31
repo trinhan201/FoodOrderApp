@@ -109,7 +109,10 @@ public class CartFragment extends Fragment implements CustomerEmailObserver {
 
                         @Override
                         public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
-                            mailService.Notify();
+//                            mailService.Notify();
+                            emptyTxt.setVisibility(View.VISIBLE);
+                            scrollView.setVisibility(View.GONE);
+                            managementCart.resetCart();
                             Toast.makeText(getActivity(), "Order success", Toast.LENGTH_LONG).show();
                         }
 

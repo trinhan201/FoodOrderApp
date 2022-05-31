@@ -114,7 +114,7 @@ public class LoginFragment extends Fragment {
 
                     MainFacade facade = new MainFacade(getActivity().getCurrentFocus());
                     facade.updateUserInfo(user.getName(), user.getEmail());
-
+                    hideLogin();
                     SharedPreferences settings = getActivity().getSharedPreferences("PREFS", 0);
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("email", user.getEmail());
@@ -124,7 +124,6 @@ public class LoginFragment extends Fragment {
                     FragmentTransaction fragmentTransaction = getParentFragmentManager().beginTransaction();
                     fragmentTransaction.replace(R.id.flContent, homeFragment);
                     fragmentTransaction.commit();
-                    facade.showLogout();
                 }
 
                 @Override
@@ -139,5 +138,12 @@ public class LoginFragment extends Fragment {
             fragmentTransaction.replace(R.id.flContent, registerFragment);
             fragmentTransaction.commit();
         });
+    }
+
+    private void hideLogin() {
+        navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+        Menu nav_Menu = navigationView.getMenu();
+        nav_Menu.findItem(R.id.navigation_login).setVisible(false);
+        nav_Menu.findItem(R.id.navigation_logout).setVisible(true);
     }
 }

@@ -14,13 +14,13 @@ public class LoginMenuToggle {
         this.view = view;
     }
 
-    public void hideLogout() {
+    public void showLogin() {
         NavigationView navigationView = view.findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.navigation_login).setVisible(true);
         nav_Menu.findItem(R.id.navigation_logout).setVisible(false);
     }
-    public void showLogout() {
+    public void hideLogin() {
         NavigationView navigationView = view.findViewById(R.id.nav_view);
         Menu nav_Menu = navigationView.getMenu();
         nav_Menu.findItem(R.id.navigation_login).setVisible(false);
